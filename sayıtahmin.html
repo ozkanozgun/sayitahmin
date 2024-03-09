@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayı Tahmin Oyunu</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #ff7e5f, #feb47b, #fffcc4, #a0e9fe, #6de7ff);
+        animation: gradient 10s linear infinite alternate;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #6068ac;
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #394939;
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+    }
+</style>
+</head>
+<body>
+    <div id="container">
+        <button onclick="modSec('kolay')">Kolay Mod</button>
+        <button onclick="modSec('orta')">Orta Mod</button>
+        <button onclick="modSec('zor')">Zor Mod</button>
+    </div>
+
+    <script>
+        function modSec(mod) {
+            let tahmin = prompt("0-" + (mod === "kolay" ? 3 : mod === "orta" ? 5 : 7) + " aralığında bir tahmin yapın:");
+            if (tahmin !== null) {
+                tahmin = parseInt(tahmin);
+                if (!isNaN(tahmin)) {
+                    tahminEt(mod, tahmin);
+                } else {
+                    alert("Geçerli bir sayı giriniz!");
+                }
+            }
+        }
+
+        function tahminEt(mod, tahmin) {
+            let maksimumSayi;
+            
+            // Moda göre maksimum sayıyı belirle
+            if (mod === "kolay") {
+                maksimumSayi = 3;
+            } else if (mod === "orta") {
+                maksimumSayi = 5;
+            } else if (mod === "zor") {
+                maksimumSayi = 7;
+            } else {
+                alert("Geçersiz mod seçimi.");
+                return;
+            }
+          
+            // Tahminin 0 ile maksimumSayi arasında olup olmadığını kontrol et
+            if (tahmin < 0 || tahmin >= maksimumSayi) {
+                alert("0-" + maksimumSayi + " aralığında seçim yapmalısın.");
+                return;
+            }
+          
+            // Bilgisayarın rastgele sayıyı üretmesi
+            let bilgisayarSayisi = Math.floor(Math.random() * maksimumSayi);
+          
+            // Tahmin ile bilgisayarın sayısını karşılaştır
+            if (tahmin === bilgisayarSayisi) {
+                alert("Kazandın!");
+            } else {
+                alert("Kaybettin: (kullanıcı: " + tahmin + ", bilgisayar: " + bilgisayarSayisi + ")");
+            }
+        }
+    </script>
+</body>
+</html>
